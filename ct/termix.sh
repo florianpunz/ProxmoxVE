@@ -218,7 +218,11 @@ EOF
     msg_custom "💾" "Your current config will be backed up to nginx.conf.bak"
     msg_custom "⚠️ " "Note: Custom modifications (reverse proxy, SSL) will be overwritten!"
     echo ""
-    read -rp "${TAB3}Update Nginx configuration? [Y/n]: " REPLY
+    if [[ "${PHS_SILENT:-0}" == "1" ]]; then
+      REPLY="y"
+    else
+      read -rp "${TAB3}Update Nginx configuration? [Y/n]: " REPLY
+    fi
     if [[ "${REPLY,,}" =~ ^(y|yes|)$ ]]; then
       msg_info "Updating Nginx Configuration"
       cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
