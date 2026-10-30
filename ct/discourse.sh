@@ -55,6 +55,12 @@ function update_script() {
   source /opt/discourse/.env
   set +a
   $STD git pull origin main
+
+  RUBY_VERSION="4.0.7"
+  if [[ "$(rbenv global 2>/dev/null)" != "$RUBY_VERSION" ]]; then
+    RUBY_INSTALL_RAILS="false" HOME=/root setup_ruby
+  fi
+
   $STD bundle install
   $STD pnpm install
   $STD runuser -u postgres -- psql -d discourse -c "CREATE EXTENSION IF NOT EXISTS vector;"

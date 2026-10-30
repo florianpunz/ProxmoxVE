@@ -30,7 +30,7 @@ msg_ok "Installed Dependencies"
 
 PG_VERSION="17" PG_MODULES="pgvector" setup_postgresql
 NODE_VERSION="24" setup_nodejs
-RUBY_VERSION="3.4.4" setup_ruby
+RUBY_VERSION="4.0.7" setup_ruby
 
 msg_info "Configuring PostgreSQL for Discourse"
 DISCOURSE_DB_PASS=$(random_password 13)
