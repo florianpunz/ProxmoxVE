@@ -66,6 +66,9 @@ TANDOOR_REF = "bare-metal"
 VERSION_INFO = []
 EOF
     cd /opt/tandoor
+    if /opt/tandoor/.venv/bin/python manage.py showmigrations cookbook 2>/dev/null | grep -q '\[ \] 0243'; then
+      $STD /opt/tandoor/.venv/bin/python manage.py shell -c "from allauth.account.models import EmailAddress; EmailAddress.objects.filter(user__is_superuser=True, primary=True, verified=False).update(verified=True)"
+    fi
     $STD /opt/tandoor/.venv/bin/python manage.py migrate
     $STD /opt/tandoor/.venv/bin/python manage.py collectstatic --no-input
     msg_ok "Updated Tandoor"
